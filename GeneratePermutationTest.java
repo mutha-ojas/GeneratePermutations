@@ -1,31 +1,24 @@
-package com.ambry.pedigree;
-
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 public class GeneratePermutationTest {
 
-    public static Set<String> printPermutn(String str, String ans, Set<String> set) {
+    public static Set<String> getPermutationSet(String str, String ans, Set<String> set) {
         // If string is empty
         if (str.length() == 0) {
             set.add(ans);
             return set;
         }
         for (int i = 0; i < str.length(); i++) {
-            // ith character of str
             char ch = str.charAt(i);
-            // Rest of the string after excluding
-            // the ith character
-            String ros = str.substring(0, i) + str.substring(i + 1);
-            // Recurvise call
-            printPermutn(ros, ans + ch,set);
+            String result = str.substring(0, i) + str.substring(i + 1);
+            getPermutationSet(result, ans + ch, set);
         }
-        //System.out.println(set.stream().collect(Collectors.joining(", ")));
         return set;
     }
 
-    private static boolean bSimilar(String a, String b) {
+    private static boolean checkIfSimilar(String a, String b) {
         if (a.length() != b.length()) {
             return false;
         }
@@ -39,15 +32,16 @@ public class GeneratePermutationTest {
 
     public static void main(String args[]) {
         String a = "1230";
-        String b = "1203";
+        String b = "1201";
         Set<String> set = new HashSet<>();
-        boolean bComp = bSimilar(a, b);
+        boolean bComp = checkIfSimilar(a, b);
         if (bComp) {
-            Set<String> setString = printPermutn(a, " ", set);
+            Set<String> setString = getPermutationSet(a, " ", set);
             System.out.println(setString.size());
         } else {
-            Set<String> setString = printPermutn(b, " ", set);
+            Set<String> setString = getPermutationSet(b, " ", set);
             System.out.println(setString.size());
         }
     }
 }
+
